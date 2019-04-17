@@ -7,6 +7,12 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+
+/**
+ * 
+ * @author tom
+ *
+ */
 public class AdjGraph implements Graph {
 	private final ArrayList<LinkedList<Edge>> adj;
 	private final int n;
@@ -93,7 +99,7 @@ public class AdjGraph implements Graph {
 		}
 		return graph;
 	}
-	
+
 	public String toGraphviz() {
 		StringBuilder s = new StringBuilder();
 		s.append("digraph G {\n");

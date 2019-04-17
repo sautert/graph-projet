@@ -15,11 +15,11 @@ public class Edge {
 	public Edge(int start, int end) {
 		this(start, end ,1);
 	}
-	
+
 	public int getValue() {
 		return value;
 	}
-	
+
 	public int getStart() {
 		return start;
 	}
