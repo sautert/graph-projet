@@ -103,7 +103,7 @@ public class AdjGraph implements Graph {
 	public String toGraphviz() {
 		StringBuilder s = new StringBuilder();
 		s.append("digraph G {\n");
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i < n; i++) {
 			s.append(i).append(";\n");
 			s.append(adj.get(i).stream().map(c -> c.toString()).collect(Collectors.joining("\n"))).append("\n"); // adj.get(i).stream().map(c -> c.toGraphviz(true))
 		}
