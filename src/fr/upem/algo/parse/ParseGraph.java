@@ -38,7 +38,7 @@ public class ParseGraph {
 		Graph graph = null;
 		int numLine = 0;
 		String currentLine;
-		//System.out.println("\n--- Starting parse the .gr file ---\n");
+		System.out.println("\n--- Starting parse the .gr file ---\n");
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			for (currentLine = reader.readLine(); currentLine != null; currentLine = reader.readLine()) {
@@ -134,8 +134,6 @@ public class ParseGraph {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			putError("Bad number ", numLine, "");
-		} catch (OutOfMemoryError e) {
-			System.out.println(numLine);
 		}
 		return tab;
 	}
