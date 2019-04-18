@@ -50,7 +50,7 @@ public class ParseGraph {
 					}
 					break;
 				case "p" :
-					if (!str[1].equals("sp")) {
+					if (str.length != 4 || !str[1].equals("sp")) {
 						putError("p should be always followed by \"sp\"", numLine, currentLine);
 						break;
 					} else if (graph != null) {
@@ -60,7 +60,7 @@ public class ParseGraph {
 					graph = new AdjGraph(Integer.parseInt(str[2]) + 1);
 					break;
 				case "a" :
-					if (graph == null) {
+					if (str.length != 4 && graph == null) {
 						putError("The first command have to be \"p sp\"", numLine, currentLine);
 						break;
 					}
@@ -88,7 +88,7 @@ public class ParseGraph {
 	 * @return int[][] which contains all coordinate associated with the id
 	 */
 	public static int[][] parseCo(String file) {
-		if (!checkExtension(file, ".gr")) {
+		if (!checkExtension(file, ".co")) {
 			throw new IllegalArgumentException("The files don't have the right extensions");
 		}
 		System.out.println("\n--- Starting parse the .co file ---\n");
@@ -106,17 +106,17 @@ public class ParseGraph {
 					}
 					break;
 				case "p" :
-					if (!str[1].equals("aux") && !str[2].equals("sp") && !str[3].equals("co")) {
+					if (str.length != 5 && !str[1].equals("aux") && !str[2].equals("sp") && !str[3].equals("co")) {
 						putError("p should be always followed by \"aux sp co\"", numLine, currentLine);
 						break;
 					} else if (tab != null) {
 						putError("The token \"p sp\" should be unique", numLine, currentLine);
 						break;
 					}
-					tab = new int[Integer.parseInt(str[4])][2];
+					tab = new int[Integer.parseInt(str[4] + 1)][2];
 					break;
-				case "a" :
-					if (tab == null) {
+				case "v" :
+					if (str.length != 4 && tab == null) {
 						putError("The first command have to be \"p sp\"", numLine, currentLine);
 						break;
 					}
@@ -134,12 +134,18 @@ public class ParseGraph {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			putError("Bad number ", numLine, "");
+		} catch (OutOfMemoryError e) {
+			System.out.println(numLine);
 		}
-		return null;
+		return tab;
 	}
 
 	public static void main(String args[]) {
-		Graph graph = ParseGraph.parseGr("../ressources/test.gr");
+		Graph graph = ParseGraph.parseGr("./ressources/test.gr");
 		System.out.println(graph.toGraphviz());
+		int[][] tab = ParseGraph.parseCo("./ressources/test.co");
+		for (int i = 1; i < graph.numberOfVertices(); i++) {
+			System.out.println("x:" + tab[i][0] + "-y:" + tab[i][1]);
+		}
 	}
 }

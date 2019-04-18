@@ -9,15 +9,20 @@ import java.util.stream.Collectors;
 
 
 /**
- * 
+ * This class implements graph as adjacent list
+ * implements the interface Graph
+ * The arc are stocked as ArrayList of LinkedList of Edge
  * @author tom
- *
  */
 public class AdjGraph implements Graph {
 	private final ArrayList<LinkedList<Edge>> adj;
 	private final int n;
 	private int nbEdge;
 
+	/**
+	 * public constructor with the final size of the graph
+	 * @param size size of the graph
+	 */
 	public AdjGraph(int size) {
 		if (size <= 0) {
 			throw new IllegalArgumentException();
@@ -34,16 +39,28 @@ public class AdjGraph implements Graph {
 		return (value < min || value >= max);
 	}
 
+	/**
+	 * @return the number of edge of the graph
+	 */
 	@Override
 	public int numberOfEdges() {
 		return nbEdge;
 	}
 
+	/**
+	 * @return the number of vertex of the graph
+	 */
 	@Override
 	public int numberOfVertices() {
 		return n;
 	}
 
+	/**
+	 * This method add an edge from a vertex to an other
+	 * @param i the vertex from
+	 * @param j the vertex to
+	 * @param value the value of the edge to add
+	 */
 	@Override
 	public void addEdge(int i, int j, int value) {
 		if (!(isLegal(i, 0, n) && isLegal(j, 0, n) && value > 0)) {
@@ -51,6 +68,12 @@ public class AdjGraph implements Graph {
 		}
 	}
 
+	/**
+	 * check if there is an edge between 2 vertices
+	 * @param i vertex from
+	 * @param j vertex to
+	 * @return true if a edge exist between the vertices
+	 */
 	@Override
 	public boolean isEdge(int i, int j) {
 		for (var it = edgeIterator(i); it.hasNext();) {
@@ -61,6 +84,12 @@ public class AdjGraph implements Graph {
 		return false;
 	}
 
+	/**
+	 * To get the weight of an edge between 2 vertices
+	 * @param i vertex from
+	 * @param j vertex to
+	 * @return return the weight of the vertex
+	 */
 	@Override
 	public int getWeight(int i, int j) {
 		for (var it = edgeIterator(i); it.hasNext();) {
@@ -72,11 +101,18 @@ public class AdjGraph implements Graph {
 		return 0;
 	}
 
+	/**
+	 * Get an Iterator on a vertex
+	 * @return return an iterator from the vertex specified in argument
+	 */
 	@Override
 	public Iterator<Edge> edgeIterator(int i) {
 		return adj.get(i).iterator();
 	}
 
+	/**
+	 * Apply a consumer on the following edge from a vertex
+	 */
 	@Override
 	public void forEachEdge(int i, Consumer<Edge> consumer) {
 		for (var it = edgeIterator(i); it.hasNext();) {
@@ -84,6 +120,12 @@ public class AdjGraph implements Graph {
 		}
 	}
 
+	/**
+	 * Generate a graph of random vertices and edges
+	 * @param vertices number of vertices
+	 * @param edges number of edge between the vertices
+	 * @return A random graph as specified in the args
+	 */
 	public static AdjGraph randomGraph(int vertices, int edges) {
 		if (edges < 0 || edges > vertices * vertices) {
 			throw new IllegalArgumentException();
@@ -100,6 +142,10 @@ public class AdjGraph implements Graph {
 		return graph;
 	}
 
+	/**
+	 * Generate a string of the vertices and edge in dot format
+	 * @return a String which can 
+	 */
 	public String toGraphviz() {
 		StringBuilder s = new StringBuilder();
 		s.append("digraph G {\n");
